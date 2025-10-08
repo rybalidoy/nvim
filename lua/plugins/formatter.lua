@@ -12,9 +12,13 @@ return {
           filetypes = { "php", "blade" },
         }),
 
-        -- 💅 Prettier for JS/TS/Vue
+        -- 💅 Prettier for JS/TS/Vue/HTML
         null_ls.builtins.formatting.prettier.with({
-          filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
+          filetypes = { 
+            "javascript", "javascriptreact", 
+            "typescript", "typescriptreact", 
+            "vue", "html"   -- added HTML
+          },
           extra_args = {
             "--print-width", "100",
             "--single-quote", "true",
@@ -33,4 +37,3 @@ return {
     })
   end,
 }
-

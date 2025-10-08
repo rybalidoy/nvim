@@ -1,12 +1,12 @@
 -- Mason PATH is handled by core.mason-path
 vim.lsp.enable({
   "lua-ls",
-  --   "gopls",
+  "gopls",
   "zls",
   "ts-ls",
-  --    "rust-analyzer",
-   "intelephense",
-  -- "phpactor",
+   "rust-analyzer",
+  "intelephense",
+   "phpactor",
   "tailwindcss",
   "html-ls",
   "css-ls",
@@ -365,4 +365,3 @@ vim.opt.statusline = table.concat({
     " %l:%c",                      -- Line:Column
     " %p%%"                        -- Percentage through file
 }, " ")
-
