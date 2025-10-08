@@ -1,0 +1,38 @@
+return {
+  {
+    "williamboman/mason.nvim",
+    -- ❌ Remove this line if you had it:
+    -- build = ":MasonUpdate",
+    config = function()
+      require("mason").setup({
+        ui = {
+          border = "rounded",
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+          },
+        },
+      })
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "volar",
+          "intelephense",
+          "html",
+          "cssls",
+          "jsonls",
+        },
+        automatic_installation = true,
+      })
+    end,
+  },
+}
+
