@@ -43,3 +43,7 @@ vim.api.nvim_create_autocmd(
     end,
   }
 )
+
+-- Toggle file explorer
+vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+
