@@ -12,25 +12,28 @@ local function get_typescript_sdk()
     return global_sdk
   end
 
-  -- If both fail, return nil to let vue-language-server find it automatically
   return nil
 end
 
 return {
   cmd = { "vue-language-server", "--stdio" },
   filetypes = { "vue" },
-  root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+  root_dir = require('lspconfig.util').root_pattern("package.json", "tsconfig.json", ".git"),
   init_options = {
-    vue = {
-      hybridMode = false,
-    },
-    -- Only set typescript config if we have a valid typescript installation
     typescript = get_typescript_sdk() and {
       tsdk = get_typescript_sdk(),
     } or nil,
   },
-  settings = {},
-  -- Uncomment this if Blink is installed
-  -- capabilities = ok and blink.get_lsp_capabilities() or nil,
+  settings = {
+    vue = {
+      complete = {
+        tags = true,
+        attributes = true,
+      },
+      -- important for <script setup lang="ts">
+      hybridMode = false,
+    },
+  },
+  capabilities = ok and blink.get_lsp_capabilities() or nil,
 }
 

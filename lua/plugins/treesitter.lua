@@ -6,8 +6,10 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
+            "windwp/nvim-ts-autotag",
         },
         config = function()
+            -- 🌲 Treesitter setup
             require("nvim-treesitter.configs").setup({
                 sync_install = false,
                 modules = {},
@@ -61,9 +63,7 @@ return {
                     select = {
                         enable = true,
                         lookahead = true,
-
                         keymaps = {
-                            -- You can use the capture groups defined in textobjects.scm
                             ["af"] = { query = "@function.outer", desc = "around a function" },
                             ["if"] = { query = "@function.inner", desc = "inner part of a function" },
                             ["ac"] = { query = "@class.outer", desc = "around a class" },
@@ -76,18 +76,18 @@ return {
                             ["ip"] = { query = "@parameter.inner", desc = "inside a parameter" },
                         },
                         selection_modes = {
-                            ["@parameter.outer"] = "v",   -- charwise
-                            ["@parameter.inner"] = "v",   -- charwise
-                            ["@function.outer"] = "v",    -- charwise
-                            ["@conditional.outer"] = "V", -- linewise
-                            ["@loop.outer"] = "V",        -- linewise
-                            ["@class.outer"] = "<c-v>",   -- blockwise
+                            ["@parameter.outer"] = "v",
+                            ["@parameter.inner"] = "v",
+                            ["@function.outer"] = "v",
+                            ["@conditional.outer"] = "V",
+                            ["@loop.outer"] = "V",
+                            ["@class.outer"] = "<c-v>",
                         },
                         include_surrounding_whitespace = false,
                     },
                     move = {
                         enable = true,
-                        set_jumps = true, -- whether to set jumps in the jumplist
+                        set_jumps = true,
                         goto_previous_start = {
                             ["[f"] = { query = "@function.outer", desc = "Previous function" },
                             ["[c"] = { query = "@class.outer", desc = "Previous class" },
@@ -110,6 +110,32 @@ return {
                     },
                 },
             })
+
+            -- 🧠 Smart autotag setup (no attribute interference)
+            require("nvim-ts-autotag").setup({
+                opts = {
+                    enable_close = true,
+                    enable_rename = true,
+                    enable_close_on_slash = false, -- avoid aggressive close behavior
+                    -- Trigger only on meaningful changes (not every keystroke)
+                    update_event = { "InsertLeave", "TextChanged" },
+                    filetypes = {
+                        "html",
+                        "xml",
+                        "javascript",
+                        "typescript",
+                        "javascriptreact",
+                        "typescriptreact",
+                        "vue",
+                        "tsx",
+                        "jsx",
+                        "php",
+                        "blade",
+                        "markdown",
+                    },
+                },
+            })
         end,
     },
 }
+

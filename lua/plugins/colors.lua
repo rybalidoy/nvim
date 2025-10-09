@@ -1,52 +1,21 @@
--- lua/plugins/colors.lua
-
 return {
-  -- 🌸 Rose Pine
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    lazy = true,
-    config = function()
-      require("rose-pine").setup({
-        disable_background = true,
-      })
-    end,
-  },
-
-  -- 🌃 Tokyo Night
-  {
-    "folke/tokyonight.nvim",
-    lazy = true,
-    config = function()
-      require("tokyonight").setup({
-        style = "storm",
-        transparent = true,
-        terminal_colors = true,
-        styles = {
-          comments = { italic = false },
-          keywords = { italic = false },
-          sidebars = "dark",
-          floats = "dark",
-        },
-      })
-    end,
-  },
-
-  -- 🥛 Catppuccin (default theme)
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    lazy = false,
-    priority = 1000, -- ensure default loads first
+    lazy = false, -- load immediately
+    priority = 1000, -- make sure it loads before other plugins
     config = function()
       require("catppuccin").setup({
-        flavour = "mocha", -- latte, frappe, macchiato, mocha
-        background = { -- set background for light/dark modes
-          light = "latte",
-          dark = "mocha",
+        flavour = "latte", -- latte (light), mocha (dark)
+        background = { light = "latte", dark = "mocha" },
+        transparent_background = false,
+        show_end_of_buffer = false,
+        term_colors = true,
+        dim_inactive = {
+          enabled = false,
+          shade = "dark",
+          percentage = 0.15,
         },
-        transparent_background = true,
-        term_colors = false, -- avoid errors in some versions
         styles = {
           comments = { "italic" },
           conditionals = { "italic" },
@@ -59,39 +28,20 @@ return {
           booleans = {},
           properties = {},
           types = {},
+          operators = {},
         },
-        integrations = { -- optional integrations
+        integrations = {
           cmp = true,
           gitsigns = true,
-          telescope = true,
           treesitter = true,
+          nvimtree = true,
+          telescope = true,
+          mini = { enabled = true },
         },
       })
 
+      -- Apply colorscheme
       vim.cmd.colorscheme("catppuccin")
-      vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    end,
-  },
-
-
-  -- 🌄 Gruvbox Material
-  {
-    "sainnhe/gruvbox-material",
-    lazy = true,
-    config = function()
-      vim.g.gruvbox_material_background = "medium"
-      vim.g.gruvbox_material_transparent_background = 1
-    end,
-  },
-
-  -- 🦋 Everforest
-  {
-    "sainnhe/everforest",
-    lazy = true,
-    config = function()
-      vim.g.everforest_background = "medium"
-      vim.g.everforest_transparent_background = 1
     end,
   },
 }
